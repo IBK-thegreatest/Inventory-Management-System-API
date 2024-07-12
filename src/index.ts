@@ -11,6 +11,20 @@ import supplierRoutes from "./routes/supplier.routes"
 import inventoryRoutes from "./routes/auth.routes"
 import { CorsOptions } from "./interfaces/cors.interface"
 import HttpException from "./exceptions/HttpException"
+import { db } from "./dbConfig/dbConfig"
+
+db.sequelize.authenticate()
+    .then(() => {
+        console.log("Database Connection Successful")
+    }).catch(err => {
+        console.log(err)
+    })
+db.sequelize.sync({ force: false })
+    .then(() => {
+        console.log("Yes Re syncing to the database has been done")
+    }).catch(err => {
+        console.log(err)
+    })
 
 const app = express()
 const corsOptions: CorsOptions = {
